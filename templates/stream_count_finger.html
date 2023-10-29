@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Count Finger</title>
+    <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <h1>Count Finger</h1>
+    <div id="cam">
+        <img src="{{ url_for('cFinger') }}">
+    </div>
+
+    <button onclick="toggleDiv()">Bật/Tắt Div</button>
+
+    <script>
+    var div = document.getElementById("cam"); // Lấy thẻ div
+    var isDivVisible = true; // Biến để theo dõi trạng thái của div
+
+    function toggleDiv() {
+      if (isDivVisible) {
+        div.parentNode.removeChild(div); // Xóa div khỏi cây DOM nếu đang được hiển thị
+      } else {
+        document.body.appendChild(div); // Thêm lại div vào cây DOM nếu đã được xóa
+      }
+
+      isDivVisible = !isDivVisible; // Chuyển đổi trạng thái của div
+    }
+    </script>
+
+</body>
+</html>
