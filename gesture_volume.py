@@ -42,6 +42,23 @@ def drawCenter(img,color,trung_diem):
 
 
 def gestureVolume():
+    vd = cv.VideoCapture(0)
+    # thiet lap kich thuoc cua camera
+    vd.set(cv.CAP_PROP_FRAME_WIDTH, 720)
+    vd.set(cv.CAP_PROP_FRAME_HEIGHT, 640)
+
+    detection = htm.HandDetection(detectionCon=0.5)
+
+    # dieu khien volume
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+        IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    volume.GetMute()
+    volume.GetMasterVolumeLevel()
+    volume_range = volume.GetVolumeRange()
+    minVol = volume_range[0]
+    maxVol = volume_range[1]
     Ptime = 0
     Ctime = 0
 

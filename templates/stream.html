@@ -1,11 +1,4 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stream</title>
-</head>
-<body>
 {% block content %}
 <br><br>
     <div class="flex h-min overscroll-auto">
@@ -97,19 +90,5 @@ def main():
                 </div>
         </div>
     </div>
-<h2>Nhấn phím bất kỳ trên bàn phím</h2>
-  <p id="display"></p>
 
-  <script>
-    // Gán sự kiện cho sự kiện nhấn phím
-    document.addEventListener("keydown", function(event) {
-      var key = event.key; // Lấy giá trị phím đã được nhấn
-
-      // Hiển thị giá trị phím đã được nhấn
-      var display = document.getElementById("display");
-      display.innerText = "Bạn đã nhấn phím: " + key;
-    });
-  </script>
 {% endblock %}
-</body>
-</html>

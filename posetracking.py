@@ -2,8 +2,9 @@ import mediapipe as mp
 import cv2 as cv
 import time
 
+
 # Initiate holistic model
-def faceTracking():
+def poseTracking():
     Ptime = 0
     Ctime = 0
     mp_drawing = mp.solutions.drawing_utils
@@ -17,7 +18,7 @@ def faceTracking():
             if not isTrue:
                 break
             # Recolor Feed
-            frame= cv.flip(frame, 1)
+            frame = cv.flip(frame, 1)
             image = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
             # Make Detections
             results = holistic.process(image)
@@ -28,10 +29,9 @@ def faceTracking():
             # Recolor image back to BGR for rendering
             image = cv.cvtColor(image, cv.COLOR_RGB2BGR)
 
-            # 1. Draw face landmarks
-            mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_TESSELATION,
-                                      mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=1, circle_radius=1),
-                                      mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=1, circle_radius=1)
+            mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
+                                      mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=4),
+                                      mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2)
                                       )
 
             Ctime = time.time()

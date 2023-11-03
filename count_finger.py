@@ -30,7 +30,24 @@ finger_tip = [4,8,12,16,20]
 
 
 def countFinger():
-    global vd
+    folderPath = r"C:\Users\ADMIN\PycharmProjects\webTracking\static\fingerimages"
+    finger_list = os.listdir(folderPath)
+
+    fl = []
+    for i in finger_list:
+        img = cv.imread(os.path.join(folderPath, i))
+        img = cv.resize(img, (200, 200), interpolation=cv.INTER_AREA)
+        fl.append(img)
+
+    Wcam, Hcam = 720, 640
+    vd = cv.VideoCapture(0)
+    vd.set(3, Wcam)
+    vd.set(4, Hcam)
+
+    detector = htm.HandDetection()
+
+    finger_tip = [4, 8, 12, 16, 20]
+
     Ctime = 0
     Ptime = 0
     while True:

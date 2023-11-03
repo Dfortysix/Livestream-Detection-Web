@@ -45,37 +45,3 @@ class  HandDetection():
 
 
 
-def main():
-    vd = cv.VideoCapture(0)
-    Ptime = 0
-    Ctime = 0
-    detection = HandDetection()
-
-    
-    while True:
-        isTrue,img = vd.read()
-        if not isTrue:
-            break
-        img = cv.flip(img,1)
-        detection.findHands(img)
-        detection.findPostion(img)
-
-        Ctime = time.time()
-        fps = 1/(Ctime-Ptime)
-        Ptime = Ctime
-        cv.putText(img,str(int(fps)),(20,70),fontFace=cv.FONT_HERSHEY_SIMPLEX,fontScale=2,color = (0,255,0),thickness=2)
-        cv.imshow("img",img)
-        
-        if cv.waitKey(20) & 0xFF == ord("x"):
-            break
-
-    vd.release()
-    cv.destroyAllWindows()
-
-
-
-
-
-
-if __name__ == '__main__':
-    main()
