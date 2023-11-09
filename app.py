@@ -1,18 +1,20 @@
 from flask import flash,Flask,Response,render_template,session,request,redirect
 from werkzeug.security import check_password_hash, generate_password_hash
-from .hantracking import main
-from .gesture_volume import gestureVolume
-from .count_finger import countFinger
-from .facetracking import faceTracking
-from .posetracking import poseTracking
-from .__init__ import  app,db
-from .model import User
-import cv2 as cv
+from hantracking import main
+from gesture_volume import gestureVolume
+from count_finger import countFinger
+from facetracking import faceTracking
+from posetracking import poseTracking
+from detect_realtime import detectRealTime
+from detect_video import detectVideo
+from __init__ import  app,db
+from model import User,Post
+from datetime import datetime
 
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return render_template('base.html')
+    return render_template('index.html')
 
 
 @app.route("/user_login", methods=["GET", "POST"])
@@ -37,8 +39,7 @@ def user_login():
         session['user_name'] = user.name
 
         flash("Login succesful!")
-        print("Thanh cong")
-        return redirect('/stream')
+        return redirect('/')
 
     else:
 
@@ -78,20 +79,6 @@ def user_register():
         return redirect("/user_login")
 
     return render_template("/user_register.html")
-@app.route('/turn_off_camera')
-def turn_off_camera():
-    # Tạo một đối tượng VideoCapture để kết nối với camera
-    cap = cv.VideoCapture(0)
-
-    # Kiểm tra xem camera có được mở thành công hay không
-    if not cap.isOpened():
-        return 'Không thể mở camera'
-
-    # Tắt camera
-    cap.release()
-
-    return 'Camera đã được tắt'
-
 
 
 @app.route('/video')
@@ -134,6 +121,63 @@ def Ptracking():
 @app.route("/stream_pose_tracking")
 def stream_pose_tracking():
     return render_template('stream_pose_tracking.html')
+
+@app.route("/detectionr")
+def feed_detect_realtime():
+    return Response(detectRealTime(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route("/detection_realtime")
+def detect_realtime():
+    return render_template('detection_realtime.html')
+
+@app.route("/detectionv",methods=['POST','GET'])
+def feed_detect_video():
+    video = request.files['video']
+    video_path = 'static/uploads/' + video.filename
+    video.save(video_path)
+
+    return Response(detectVideo(video_path), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route("/detection_video")
+def detect_video():
+    return render_template('detection_video.html')
+
+
+@app.route('/blog')
+def blog_home():
+    posts = Post.query.order_by(Post.date_posted.desc()).all()
+    return render_template('blog.html',
+	posts=posts,
+	title='Cute Blog 🥳',
+    description='A modern web blog template for flask with auto SEO from cuteblog',
+    cover='https://www.python.org/static/opengraph-icon-200x200.png'
+	)
+
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post = Post.query.filter_by(id=post_id).one()
+    return render_template('post.html',
+	post=post
+	)
+
+@app.route('/add_post')
+def add_post():
+    return render_template('add_post.html')
+
+@app.route('/savepost', methods=['POST'])
+def savepost():
+    title = request.form['title']
+    subtitle = request.form['subtitle']
+    author = request.form['author']
+    content = request.form['content']
+    cover = request.form['cover']
+
+    post = Post(title=title, subtitle=subtitle, author=author, content=content, cover=cover, date_posted=datetime.now())
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect("/blog")
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -17,7 +17,7 @@ app.secret_key = b'_53oi3uriq9pifpff;apl'
 
 UPLOAD_FOLDER = 'static/uploads/'
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///" +os.path.join(basedir, "web.db")
+app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///" +os.path.join(basedir, "db/website.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
