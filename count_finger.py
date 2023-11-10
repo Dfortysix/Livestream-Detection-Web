@@ -39,11 +39,7 @@ def countFinger():
         img = cv.resize(img, (200, 200), interpolation=cv.INTER_AREA)
         fl.append(img)
 
-    Wcam, Hcam = 720, 640
     vd = cv.VideoCapture(0)
-    vd.set(3, Wcam)
-    vd.set(4, Hcam)
-
     detector = htm.HandDetection()
 
     finger_tip = [4, 8, 12, 16, 20]
