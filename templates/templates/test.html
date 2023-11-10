@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Button để bật tắt thẻ div</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="toggleDiv()">Bật/Tắt Div</button>
+  <div id="myDiv">Nội dung trong div</div>
+
+  <script>
+    function toggleDiv() {
+      var div = document.getElementById("myDiv");
+      div.classList.toggle("hidden");
+    }
+  </script>
+
+</body>
+</html>

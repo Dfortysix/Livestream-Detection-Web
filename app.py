@@ -147,11 +147,7 @@ def detect_video():
 def blog_home():
     posts = Post.query.order_by(Post.date_posted.desc()).all()
     return render_template('blog.html',
-	posts=posts,
-	title='Cute Blog 🥳',
-    description='A modern web blog template for flask with auto SEO from cuteblog',
-    cover='https://www.python.org/static/opengraph-icon-200x200.png'
-	)
+	posts=posts,)
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
