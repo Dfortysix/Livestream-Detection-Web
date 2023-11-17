@@ -7,7 +7,7 @@ from facetracking import faceTracking
 from posetracking import poseTracking
 from detect_realtime import detectRealTime
 from detect_video import detectVideo
-from __init__ import  app,db
+from __init__ import  app,db,login_required
 from model import User,Post
 from datetime import datetime
 
@@ -86,6 +86,7 @@ def video():
     return Response(main(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/stream')
+@login_required
 def stream():
     return render_template('stream.html')
 
@@ -94,6 +95,7 @@ def gvolume():
     return Response(gestureVolume(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/stream_gesturevolume')
+@login_required
 def stream_gesturevolume():
     return render_template('stream_gestureVolume.html')
 
@@ -102,6 +104,7 @@ def cFinger():
     return Response(countFinger(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/stream_count_finger")
+@login_required
 def stream_count_finger():
     return render_template('stream_count_finger.html')
 
@@ -111,6 +114,7 @@ def Ftracking():
     return Response(faceTracking(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/stream_face_tracking")
+@login_required
 def stream_face_tracking():
     return render_template('stream_face_tracking.html')
 
@@ -119,6 +123,7 @@ def Ptracking():
     return Response(poseTracking(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/stream_pose_tracking")
+@login_required
 def stream_pose_tracking():
     return render_template('stream_pose_tracking.html')
 
@@ -127,6 +132,7 @@ def feed_detect_realtime():
     return Response(detectRealTime(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/detection_realtime")
+@login_required
 def detect_realtime():
     return render_template('detection_realtime.html')
 
@@ -139,6 +145,7 @@ def feed_detect_video():
     return Response(detectVideo(video_path), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/detection_video")
+@login_required
 def detect_video():
     return render_template('detection_video.html')
 
@@ -157,6 +164,7 @@ def post(post_id):
 	)
 
 @app.route('/add_post')
+@login_required
 def add_post():
     return render_template('add_post.html')
 

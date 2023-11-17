@@ -9,7 +9,7 @@ import handtrackingmodule as htm
 
 
 def countFinger():
-    folderPath = r"C:\Users\ADMIN\PycharmProjects\webTracking\static\fingerimages"
+    folderPath = os.path.join(os.path.dirname(__file__), 'static/fingerimages')
     finger_list = os.listdir(folderPath)
 
     fl = []

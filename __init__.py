@@ -1,8 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
-from flask import Flask
+from flask import Flask,session,redirect
 import os
-
+from functools import wraps
 
 
 
@@ -23,3 +23,17 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 db = SQLAlchemy(app)
+
+
+def login_required(f):
+    """
+    Decorate routes to require login.
+
+    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/user_login")
+        return f(*args, **kwargs)
+    return decorated_function
