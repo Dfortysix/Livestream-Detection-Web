@@ -2,7 +2,6 @@ import mediapipe as mp
 import cv2 as cv
 import time
 
-# Initiate holistic model
 def faceTracking():
     Ptime = 0
     Ctime = 0

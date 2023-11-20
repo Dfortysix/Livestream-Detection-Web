@@ -11,13 +11,6 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 
 
-
-
-
-
-
-
-
 def drawCenter(img,color,trung_diem):
     return cv.circle(img,center=trung_diem,radius=10,color=color,thickness=-1)
 

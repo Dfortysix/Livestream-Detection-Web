@@ -3,7 +3,6 @@ import cv2 as cv
 import time
 
 
-# Initiate holistic model
 def poseTracking():
     Ptime = 0
     Ctime = 0
@@ -22,11 +21,6 @@ def poseTracking():
             image = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
             # Make Detections
             results = holistic.process(image)
-            # print(results.face_landmarks)
-
-            # face_landmarks, pose_landmarks, left_hand_landmarks, right_hand_landmarks
-
-            # Recolor image back to BGR for rendering
             image = cv.cvtColor(image, cv.COLOR_RGB2BGR)
 
             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,

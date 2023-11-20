@@ -5,7 +5,7 @@ import cv2 as cv
 def detectRealTime():
     weightsPath = "frozen_inference_graph.pb"
     configPath = "ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt"
-    thres = 0.6 # Threshold to detect object
+    thres = 0.6
 
 
     cap = cv.VideoCapture(0)
